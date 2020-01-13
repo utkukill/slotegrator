@@ -39,7 +39,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Game', 'url' => ['/site/about']],
+            ['label' => 'Game', 'url' => ['/site/game']],
             ['label' => 'Bank', 'url' => ['/bank']],
             ['label' => 'Wins', 'url' => ['/wins']],
             //['label' => 'Contact', 'url' => ['/site/contact']],
