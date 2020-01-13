@@ -127,7 +127,11 @@ class SiteController extends Controller
     public function actionGame()
     {
 
-        if (!Yii::$app->user->isGuest) {
+
+        $model = new LoginForm();
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->login() or !Yii::$app->user->isGuest) {
 
             $bank_moneys = (new \yii\db\Query())
                 ->select(['val'])
@@ -176,8 +180,6 @@ class SiteController extends Controller
 
                 // money or points or things
                 $chance = rand(1, 3);
-
-
                 $win = new Wins();
 
 
@@ -199,13 +201,10 @@ class SiteController extends Controller
                     $win->win_type = 1;
                     $win->win_balance_int = $prize;
                     $win->insert();
-
-
-
                 }
 
                 // if win of points
-                if($chance == 2  && $bank_points >= 1) {
+                if($chance == 2) {
 
                     $prize = rand(0, 100);
                     $prize_type = 2;
@@ -219,7 +218,7 @@ class SiteController extends Controller
                 }
 
                 // if win of things
-                if($chance == 29 ) {
+                if($chance == 29) {
 
                     $prize = rand(0, $bank_points);
                     $prize_type = 3;
@@ -242,14 +241,8 @@ class SiteController extends Controller
                     'bank_things'=>$bank_things,
                     'prize'=>$prize,
                 ));
-
-
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->render('game');
-        }
 
         $model->password = '';
         return $this->render('login', [
